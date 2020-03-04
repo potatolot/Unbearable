@@ -63,6 +63,7 @@ public class Server : MonoBehaviour
         NetworkTransport.Shutdown();
     }
 
+    // Function to communicate connection status and recieve data
     public void UpdateMessagePump()
     {
         if (!isStarted)
@@ -98,6 +99,5 @@ public class Server : MonoBehaviour
                 Debug.Log("Unexpected network event type");
                 break;
         }
-
     }
 }
