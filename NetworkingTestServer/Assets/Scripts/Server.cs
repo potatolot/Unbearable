@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -83,7 +83,7 @@ public class Server : MonoBehaviour
                 break;
 
             case NetworkEventType.ConnectEvent:
-                Debug.Log(string.Format("User {0} has connected!", connectionID));
+                Debug.Log(string.Format("User {0} has connected through host {1}", connectionID, recHostID));
                 break;
 
             case NetworkEventType.DisconnectEvent:
@@ -91,7 +91,11 @@ public class Server : MonoBehaviour
                 break;
 
             case NetworkEventType.DataEvent:
-                Debug.Log("Data");
+                BinaryFormatter formatter = new BinaryFormatter();
+                MemoryStream ms = new MemoryStream(recBuffer);
+                NetMsg msg = (NetMsg)formatter.Deserialize(ms);
+
+                OnData(connectionID, channelID, recHostID, msg);
                 break;
 
             default:
@@ -100,4 +104,47 @@ public class Server : MonoBehaviour
                 break;
         }
     }
+
+	#region OnData
+	private void OnData(int connectionID, int channelID, int recHostID, NetMsg msg)
+    {
+        switch (msg.OperationCode)
+        {
+            case NetOP.None:
+                Debug.Log("Unexpected NETOP");
+                break;
+
+            case NetOP.CreateAccount:
+                CreateAccount(connectionID, channelID, recHostID, (Net_CreateAccount)msg);
+                break;
+        }
+    }
+
+    private void CreateAccount(int connectionID, int channelID, int recHostID, Net_CreateAccount ca)
+    {
+        Debug.Log(string.Format("user: {0}, pass: {1}, mail: {2}", ca.Username, ca.Password, ca.Email));
+    }
+    #endregion
+
+    #region Send
+    public void SendClient(int recHost, int connectionID, NetMsg msg)
+    {
+        //data holder
+        byte[] buffer = new byte[BYTE_SIZE];
+
+        //data crusher into byte array
+        BinaryFormatter formatter = new BinaryFormatter();
+        MemoryStream ms = new MemoryStream(buffer);
+        formatter.Serialize(ms, msg);
+
+        if (recHost == 0)
+        {
+            NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, BYTE_SIZE, out error);
+        }
+        else
+        {
+            NetworkTransport.Send(webHostID, connectionID, reliableChannel, buffer, BYTE_SIZE, out error);
+        }
+    }
+    #endregion
 }
