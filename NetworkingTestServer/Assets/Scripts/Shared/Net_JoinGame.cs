@@ -7,5 +7,5 @@ public class Net_JoinGame : NetMsg
     }
 
     public string Username { set; get; }
-    public string Room { set; get; }
+    public string Roomcode { set; get; }
 }

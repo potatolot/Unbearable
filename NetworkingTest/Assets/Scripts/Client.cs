@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class Client : MonoBehaviour
 {
+    public static Client Instance { private set; get; }
     private byte reliableChannel;
     private int connectionID;
     private int hostID;
@@ -23,6 +24,7 @@ public class Client : MonoBehaviour
     #region MonoBehaviour
     private void Start()
     {
+        Instance = this;
         DontDestroyOnLoad(gameObject);
         Init();
     }
@@ -140,15 +142,14 @@ public class Client : MonoBehaviour
 
         NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, BYTE_SIZE, out error);
     }
-	#endregion
 
-    public void TESTFUNCTIONCREATEACCOUNT()
+    public void SendJoinGame(string username, string roomcode)
     {
-        Net_JoinGame ca = new Net_JoinGame();
+        Net_JoinGame jg = new Net_JoinGame();
+        jg.Username = username;
+        jg.Roomcode = roomcode;
 
-        ca.Username = "Swagger";
-        ca.Room = "199";
-
-        SendServer(ca);
+        SendServer(jg);
     }
+	#endregion
 }

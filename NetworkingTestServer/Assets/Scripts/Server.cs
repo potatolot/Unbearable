@@ -122,7 +122,7 @@ public class Server : MonoBehaviour
 
     private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame ca)
     {
-        Debug.Log(string.Format("user: {0}, room: {1}", ca.Username, ca.Room));
+        Debug.Log(string.Format("user: {0}, room: {1}", ca.Username, ca.Roomcode));
     }
     #endregion
 
