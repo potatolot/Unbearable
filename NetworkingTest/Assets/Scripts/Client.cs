@@ -144,11 +144,10 @@ public class Client : MonoBehaviour
 
     public void TESTFUNCTIONCREATEACCOUNT()
     {
-        Net_CreateAccount ca = new Net_CreateAccount();
+        Net_JoinGame ca = new Net_JoinGame();
 
-        ca.Username = "Swag";
-        ca.Password = "Yolo";
-        ca.Email = "Bruh";
+        ca.Username = "Swagger";
+        ca.Room = "199";
 
         SendServer(ca);
     }

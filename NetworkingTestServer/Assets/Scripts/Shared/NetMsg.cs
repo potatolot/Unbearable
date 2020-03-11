@@ -1,9 +1,9 @@
 ﻿public static class NetOP
 {
-	//what type ofmessage are we sending?
+	//what type of message are we sending?
 	public const int None = 0;
 
-	public const int CreateAccount = 1;
+	public const int JoinGame = 1;
 }
 
 [System.Serializable]

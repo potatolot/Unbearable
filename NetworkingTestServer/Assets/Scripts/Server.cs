@@ -114,15 +114,15 @@ public class Server : MonoBehaviour
                 Debug.Log("Unexpected NETOP");
                 break;
 
-            case NetOP.CreateAccount:
-                CreateAccount(connectionID, channelID, recHostID, (Net_CreateAccount)msg);
+            case NetOP.JoinGame:
+                JoinGame(connectionID, channelID, recHostID, (Net_JoinGame)msg);
                 break;
         }
     }
 
-    private void CreateAccount(int connectionID, int channelID, int recHostID, Net_CreateAccount ca)
+    private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame ca)
     {
-        Debug.Log(string.Format("user: {0}, pass: {1}, mail: {2}", ca.Username, ca.Password, ca.Email));
+        Debug.Log(string.Format("user: {0}, room: {1}", ca.Username, ca.Room));
     }
     #endregion
 
