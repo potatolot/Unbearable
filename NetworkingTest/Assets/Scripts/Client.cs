@@ -182,5 +182,12 @@ public class Client : MonoBehaviour
 
         SendServer(jg);
     }
+
+    public void SendReadyStatus(string username, bool status)
+    {
+        Net_ReadyStatus rs = new Net_ReadyStatus();
+        rs.Username = username;
+        rs.Status = status;
+    }
 	#endregion
 }

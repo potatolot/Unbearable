@@ -117,20 +117,31 @@ public class Server : MonoBehaviour
             case NetOP.JoinGame:
                 JoinGame(connectionID, channelID, recHostID, (Net_JoinGame)msg);
                 break;
+
+            case NetOP.ReadyStatus:
+                ReadyStatus(connectionID, channelID, recHostID, (Net_ReadyStatus)msg);
+                break;
         }
     }
-
-    private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame ca)
+    private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame jg)
     {
-        Debug.Log(string.Format("user: {0}, room: {1}", ca.Username, ca.Roomcode));
+        Debug.Log(string.Format("user: {0}, room: {1}", jg.Username, jg.Roomcode));
 
         Net_OnJoinGame ojg = new Net_OnJoinGame();
         ojg.Success = 0;
         ojg.Information = "Game Joined";
-        ojg.Roomcode = ca.Roomcode;
+        ojg.Roomcode = jg.Roomcode;
         ojg.Token = "TOKEN";
 
         SendClient(recHostID, connectionID, ojg);
+    }
+    private void ReadyStatus(int connectionID, int channelID, int recHostID, Net_ReadyStatus rs)
+    {
+        Net_OnReadyStatus ors = new Net_OnReadyStatus();
+        ors.Username = rs.Username;
+        ors.Status = rs.Status;
+
+        SendClient(recHostID, connectionID, ors);
     }
     #endregion
 

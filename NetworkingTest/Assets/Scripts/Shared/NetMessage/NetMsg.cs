@@ -5,6 +5,9 @@
 
 	public const int JoinGame = 1;
 	public const int OnJoinGame = 2;
+
+	public const int ReadyStatus = 3;
+	public const int OnReadyStatus = 4;
 }
 
 [System.Serializable]

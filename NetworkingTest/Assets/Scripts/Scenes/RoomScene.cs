@@ -13,6 +13,15 @@ public class RoomScene : MonoBehaviour
 	private void OnClickReady()
 	{
 		//change status
+		string username = Client.Instance.self.Username;
+		bool status = Client.Instance.self.Status;
+
+		if (status == false)
+			status = true;
+		else if (status == true)
+			status = false;
+
+		Client.Instance.SendReadyStatus(username,status);
 	}
 
 	private void OnClickStart()
