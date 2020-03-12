@@ -18,6 +18,10 @@ public class Client : MonoBehaviour
     private const int BYTE_SIZE = 1024;
     private const string SERVER_IP = "127.0.0.1";
 
+    //storation of account data
+    public Account self;
+    private string token;
+
     private bool isStarted;
 
     // Everything that has to do with the monobehavior
@@ -125,6 +129,31 @@ public class Client : MonoBehaviour
             case NetOP.None:
                 Debug.Log("Unexpected NETOP");
                 break;
+
+            case NetOP.OnJoinGame:
+                OnJoinGame((Net_OnJoinGame)msg);
+                break;
+
+        }
+    }
+
+    private void OnJoinGame(Net_OnJoinGame ojg)
+    {
+        LobbyScene.Instance.ChangeAuthenticationMessage(ojg.Information);
+        if (ojg.Success != 0)
+        {
+            //error
+            LobbyScene.Instance.EnableInteraction();
+        }
+        else
+        {
+            self = new Account();
+
+            self.ActiveConnection = ojg.ConnectionID;
+            self.Username = ojg.Username;
+            token = ojg.Token;
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Hub");
         }
     }
     #endregion

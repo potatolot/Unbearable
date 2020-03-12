@@ -123,6 +123,14 @@ public class Server : MonoBehaviour
     private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame ca)
     {
         Debug.Log(string.Format("user: {0}, room: {1}", ca.Username, ca.Roomcode));
+
+        Net_OnJoinGame ojg = new Net_OnJoinGame();
+        ojg.Success = 0;
+        ojg.Information = "Game Joined";
+        ojg.Discriminator = "0000";
+        ojg.Token = "TOKEN";
+
+        SendClient(recHostID, connectionID, ojg);
     }
     #endregion
 

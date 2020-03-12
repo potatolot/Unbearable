@@ -4,6 +4,7 @@
 	public const int None = 0;
 
 	public const int JoinGame = 1;
+	public const int OnJoinGame = 2;
 }
 
 [System.Serializable]
