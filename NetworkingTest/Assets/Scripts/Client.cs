@@ -21,6 +21,7 @@ public class Client : MonoBehaviour
     //storation of account data
     public Account self;
     private string token;
+    public string roomcode;
 
     private bool isStarted;
 
@@ -133,7 +134,6 @@ public class Client : MonoBehaviour
             case NetOP.OnJoinGame:
                 OnJoinGame((Net_OnJoinGame)msg);
                 break;
-
         }
     }
 
@@ -152,8 +152,10 @@ public class Client : MonoBehaviour
             self.ActiveConnection = ojg.ConnectionID;
             self.Username = ojg.Username;
             token = ojg.Token;
+            roomcode = ojg.Roomcode;
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Hub");
+            Debug.Log("Game " + ojg.Roomcode + " Joined");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
         }
     }
     #endregion

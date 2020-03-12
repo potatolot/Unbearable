@@ -127,7 +127,7 @@ public class Server : MonoBehaviour
         Net_OnJoinGame ojg = new Net_OnJoinGame();
         ojg.Success = 0;
         ojg.Information = "Game Joined";
-        ojg.Discriminator = "0000";
+        ojg.Roomcode = ca.Roomcode;
         ojg.Token = "TOKEN";
 
         SendClient(recHostID, connectionID, ojg);

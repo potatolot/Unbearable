@@ -1,18 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Account : MonoBehaviour
+﻿[System.Serializable]
+public class Account
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public int ActiveConnection { set; get; }
+	public string Username { set; get; }
+	public byte Status { set; get; }
 }
