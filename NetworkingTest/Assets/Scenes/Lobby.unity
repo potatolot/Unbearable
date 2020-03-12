@@ -2490,8 +2490,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1159988144}
-        m_MethodName: TESTFUNCTIONCREATEACCOUNT
+      - m_Target: {fileID: 88636480}
+        m_MethodName: OnClickJoinGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
