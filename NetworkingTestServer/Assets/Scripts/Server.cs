@@ -123,6 +123,7 @@ public class Server : MonoBehaviour
                 break;
         }
     }
+
     private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame jg)
     {
         Debug.Log(string.Format("user: {0}, room: {1}", jg.Username, jg.Roomcode));
@@ -135,6 +136,7 @@ public class Server : MonoBehaviour
 
         SendClient(recHostID, connectionID, ojg);
     }
+
     private void ReadyStatus(int connectionID, int channelID, int recHostID, Net_ReadyStatus rs)
     {
         Net_OnReadyStatus ors = new Net_OnReadyStatus();

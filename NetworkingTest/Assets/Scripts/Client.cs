@@ -65,7 +65,6 @@ public class Client : MonoBehaviour
         // Standalone Client
         connectionID = NetworkTransport.Connect(hostID, SERVER_IP, PORT, 0, out error);
         Debug.Log(string.Format("Connecting from standalone", SERVER_IP));
-
 #endif
 
         Debug.Log(string.Format("Attempting to connect on {0}...", SERVER_IP));
