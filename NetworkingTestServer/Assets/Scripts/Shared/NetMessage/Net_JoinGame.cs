@@ -4,8 +4,9 @@ public class Net_JoinGame : NetMsg
     public Net_JoinGame()
     {
         OperationCode = NetOP.JoinGame;
-    }
+	}
 
     public string Username { set; get; }
     public string Roomcode { set; get; }
+	public int[] Players { set; get; }
 }

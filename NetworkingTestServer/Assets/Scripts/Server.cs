@@ -20,6 +20,7 @@ public class Server : MonoBehaviour
     private bool isStarted;
     private byte error;
 
+	List<int> Connections;
 	List<string> rooms;
 	List<int> roomcount;
 
@@ -27,6 +28,7 @@ public class Server : MonoBehaviour
     #region MonoBehaviour
     private void Start()
     {
+
 		rooms = new List<string>();
 		roomcount = new List<int>();
         DontDestroyOnLoad(gameObject);
@@ -59,7 +61,6 @@ public class Server : MonoBehaviour
 
         Debug.Log(string.Format("Opening connection on port {0} and webport {1}", PORT, WEB_PORT));
         isStarted = true;
-
     }
 
     // Function to shutdown the server
@@ -90,10 +91,11 @@ public class Server : MonoBehaviour
 
             case NetworkEventType.ConnectEvent:
                 Debug.Log(string.Format("User {0} has connected through host {1}", connectionID, recHostID));
+				SendID(recHostID, connectionID);
                 break;
 
             case NetworkEventType.DisconnectEvent:
-                Debug.Log(string.Format(" User {0} has disconnected :(", connectionID));
+                Debug.Log(string.Format("User {0} has disconnected :(", connectionID));
                 break;
 
             case NetworkEventType.DataEvent:
@@ -133,9 +135,9 @@ public class Server : MonoBehaviour
     private void JoinGame(int connectionID, int channelID, int recHostID, Net_JoinGame jg)
     {
         Debug.Log(string.Format("user: {0}, room: {1}", jg.Username, jg.Roomcode));
-
-        Net_OnJoinGame ojg = new Net_OnJoinGame();
-        ojg.Success = 0;
+		
+		Net_OnJoinGame ojg = new Net_OnJoinGame();
+		ojg.Success = 0;
         ojg.Information = "Game Joined";
         ojg.Roomcode = jg.Roomcode;
         ojg.Token = "TOKEN";
@@ -207,5 +209,18 @@ public class Server : MonoBehaviour
             NetworkTransport.Send(webHostID, connectionID, reliableChannel, buffer, BYTE_SIZE, out error);
         }
     }
-    #endregion
+
+	private void SendID(int recHostID, int connectionID)
+	{
+		Connections.Add(connectionID);
+
+		Net_SendID si = new Net_SendID();
+		si.Connections = Connections;
+
+		for (int i = 0; i < Connections.Count; i++)
+		{
+			SendClient(recHostID, connectionID, si);
+		}
+	}
+	#endregion
 }

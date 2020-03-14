@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using System.Collections.Generic;
+
+[System.Serializable]
 public class Net_OnJoinGame : NetMsg
 {
     public Net_OnJoinGame()

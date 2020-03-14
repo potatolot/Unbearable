@@ -3,6 +3,8 @@
 	//what type of message are we sending?
 	public const int None = 0;
 
+	public const int SendID = 5;
+
 	public const int JoinGame = 1;
 	public const int OnJoinGame = 2;
 

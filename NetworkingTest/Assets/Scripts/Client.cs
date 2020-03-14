@@ -133,6 +133,10 @@ public class Client : MonoBehaviour
             case NetOP.OnJoinGame:
                 OnJoinGame((Net_OnJoinGame)msg);
                 break;
+
+			case NetOP.SendID:
+				SendConnect((Net_SendID)msg);
+				break;
         }
     }
 
@@ -158,6 +162,11 @@ public class Client : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
         }
     }
+
+	private void SendConnect(Net_SendID si)
+	{
+		//save the connection list somewhere
+	}
     #endregion
 
     #region Send
