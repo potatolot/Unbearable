@@ -2,6 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 public class Server : MonoBehaviour
 {
@@ -19,10 +20,15 @@ public class Server : MonoBehaviour
     private bool isStarted;
     private byte error;
 
+	List<string> rooms;
+	List<int> roomcount;
+
     // Everything that has to do with the monobehavior
     #region MonoBehaviour
     private void Start()
     {
+		rooms = new List<string>();
+		roomcount = new List<int>();
         DontDestroyOnLoad(gameObject);
         Init();
     }
@@ -134,7 +140,41 @@ public class Server : MonoBehaviour
         ojg.Roomcode = jg.Roomcode;
         ojg.Token = "TOKEN";
 
-        SendClient(recHostID, connectionID, ojg);
+		//rooms: 
+		//1 2 1 2 2
+		//loop 1 roomcount:
+		//1
+		//loop 2 roomcount:
+		//0 1
+		//loop 3 roomcount:
+		//1 0 1
+		//loop 4 roomcount:
+		//0 1 0 1
+		//loop 5 roomcount:
+
+		rooms.Add(jg.Roomcode);
+
+		if (roomcount.Count == 0)
+		{
+			roomcount.Add(1);
+		}
+		else
+		{
+			roomcount.Add(0);
+		}
+
+		for (int i = 0; i <= rooms.Count; i++)
+		{
+			if (rooms[i] == jg.Roomcode)
+			{
+				roomcount[i]++; //every item in roomcount now has the number of times it appears in rooms in the same order as rooms
+			}
+		}
+
+		for (int i = 0; i <=roomcount.Count; i++)
+		{ ojg.Playerslot += roomcount[i]; }
+
+		SendClient(recHostID, connectionID, ojg);
     }
 
     private void ReadyStatus(int connectionID, int channelID, int recHostID, Net_ReadyStatus rs)

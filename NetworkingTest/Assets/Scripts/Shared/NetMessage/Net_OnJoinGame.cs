@@ -12,4 +12,5 @@ public class Net_OnJoinGame : NetMsg
     public int ConnectionID { set; get; }
     public string Username { set; get; }
     public string Token { set; get; }
+	public int Playerslot { set; get; }
 }

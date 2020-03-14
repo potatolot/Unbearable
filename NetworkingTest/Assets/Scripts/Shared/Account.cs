@@ -4,4 +4,5 @@ public class Account
 	public int ActiveConnection { set; get; }
 	public string Username { set; get; }
 	public bool Status { set; get; }
+	public int Playerslot { set; get; }
 }

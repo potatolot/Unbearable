@@ -150,10 +150,11 @@ public class Client : MonoBehaviour
 
             self.ActiveConnection = ojg.ConnectionID;
             self.Username = ojg.Username;
+			self.Playerslot = ojg.Playerslot;
             token = ojg.Token;
             roomcode = ojg.Roomcode;
 
-            Debug.Log("Game " + ojg.Roomcode + " Joined");
+            Debug.Log("Game " + ojg.Roomcode + " Joined as player" + ojg.Playerslot);
             UnityEngine.SceneManagement.SceneManager.LoadScene("Room");
         }
     }
