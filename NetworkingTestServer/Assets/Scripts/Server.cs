@@ -20,17 +20,18 @@ public class Server : MonoBehaviour
     private bool isStarted;
     private byte error;
 
-	List<int> Connections;
 	List<string> rooms;
 	List<int> roomcount;
+	List<int> Connections;
 
-    // Everything that has to do with the monobehavior
-    #region MonoBehaviour
-    private void Start()
+	// Everything that has to do with the monobehavior
+	#region MonoBehaviour
+	private void Start()
     {
 
 		rooms = new List<string>();
 		roomcount = new List<int>();
+		Connections = new List<int>();
         DontDestroyOnLoad(gameObject);
         Init();
     }
