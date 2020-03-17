@@ -140,7 +140,7 @@ public class Server : MonoBehaviour
 		Net_OnJoinGame ojg = new Net_OnJoinGame();
 		ojg.Success = 0;
         ojg.Information = "Game Joined";
-        ojg.Roomcode = jg.Roomcode;
+        ojg.Roomcode = jg.Roomcode; //the user roomcode input
         ojg.Token = "TOKEN";
 
 		//rooms: 
@@ -155,26 +155,26 @@ public class Server : MonoBehaviour
 		//0 1 0 1
 		//loop 5 roomcount:
 
-		rooms.Add(jg.Roomcode);
+		rooms.Add(jg.Roomcode); //add a string to the list of rooms
 
 		if (roomcount.Count == 0)
-		{
+		{ //the first one doesn't work otherwise
 			roomcount.Add(1);
 		}
 		else
-		{
+		{ //otherwise add a 0 to the list and count later
 			roomcount.Add(0);
 		}
 
-		for (int i = 0; i <= rooms.Count; i++)
+		for (int i = 0; i < rooms.Count; i++)
 		{
 			if (rooms[i] == jg.Roomcode)
-			{
-				roomcount[i]++; //every item in roomcount now has the number of times it appears in rooms in the same order as rooms
+			{ //every item in roomcount now has the number of times it appears in rooms in the same order as rooms
+				roomcount[i]++;
 			}
 		}
 
-		for (int i = 0; i <=roomcount.Count; i++)
+		for (int i = 0; i < roomcount.Count; i++)
 		{ ojg.Playerslot += roomcount[i]; }
 
 		SendClient(recHostID, connectionID, ojg);

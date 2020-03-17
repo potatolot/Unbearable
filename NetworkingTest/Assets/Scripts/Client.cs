@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -25,9 +26,13 @@ public class Client : MonoBehaviour
 
     private bool isStarted;
 
-    // Everything that has to do with the monobehavior
-    #region MonoBehaviour
-    private void Start()
+	// Everything that has to do with the monobehavior
+	#region MonoBehaviour
+	private void Awake()
+	{
+		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
+	}
+	private void Start()
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -107,9 +112,11 @@ public class Client : MonoBehaviour
                 break;
 
             case NetworkEventType.DataEvent:
-                BinaryFormatter formatter = new BinaryFormatter();
-                MemoryStream ms = new MemoryStream(recBuffer);
-                NetMsg msg = (NetMsg)formatter.Deserialize(ms);
+				NetMsg msg = BinaryFormat.DeFormat(recBuffer);
+
+                //BinaryFormatter formatter = new BinaryFormatter();
+                //MemoryStream ms = new MemoryStream(recBuffer);
+                //NetMsg msg = (NetMsg)formatter.Deserialize(ms);
 
                 OnData(connectionID, channelID, recHostID, msg);
                 break;
@@ -175,10 +182,12 @@ public class Client : MonoBehaviour
         //data holder
         byte[] buffer = new byte[BYTE_SIZE];
 
-        //data crusher into byte array
-        BinaryFormatter formatter = new BinaryFormatter();
-        MemoryStream ms = new MemoryStream(buffer);
-        formatter.Serialize(ms, msg);
+		//data crusher into byte array
+		BinaryFormat.Format(buffer, msg);
+
+        //BinaryFormatter formatter = new BinaryFormatter();
+        //MemoryStream ms = new MemoryStream(buffer);
+        //formatter.Serialize(ms, msg);
 
         NetworkTransport.Send(hostID, connectionID, reliableChannel, buffer, BYTE_SIZE, out error);
     }
