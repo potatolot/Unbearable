@@ -149,7 +149,6 @@ public class Client : MonoBehaviour
 
     private void OnJoinGame(Net_OnJoinGame ojg)
     {
-        LobbyScene.Instance.ChangeAuthenticationMessage(ojg.Information);
         if (ojg.Success != 0)
         {
             //error

@@ -20,15 +20,6 @@ public class LobbyScene : MonoBehaviour
 		Client.Instance.SendJoinGame(username, roomcode);
 	}
 
-	public void ChangeWelcomeMessage(string msg)
-	{
-		GameObject.Find("WelcomeText").GetComponent<TextMeshProUGUI>().text = msg;
-	}
-	public void ChangeAuthenticationMessage(string msg)
-	{
-		GameObject.Find("AuthText").GetComponent<TextMeshProUGUI>().text = msg;
-	}
-
 	public void EnableInteraction()
 	{
 		GameObject.Find("Canvas").GetComponent<CanvasGroup>().interactable = true;

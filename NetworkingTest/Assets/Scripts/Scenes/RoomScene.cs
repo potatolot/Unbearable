@@ -6,7 +6,7 @@ public class RoomScene : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI roomInformation;
 	private void Start()
 	{
-		selfInformation.text = Client.Instance.self.Username;
+		//selfInformation.text = Client.Instance.self.Username;
 		roomInformation.text = Client.Instance.roomcode;
 	}
 
